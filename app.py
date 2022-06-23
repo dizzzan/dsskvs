@@ -34,15 +34,18 @@ def create(update=False):
     if k in kvs:
         if not update:
             return 'Duplicate key', 409
-        kvs[k] = v
-    else:
-        kvs.append({ k: v })
+
+    kvs[k] = v
+    return 'OK', 200
 
 # get a stored value by key
 @app.route('/api/values/<string:k>')
 def get(k):
-    return kvs[k]
-
+    if k in kvs:
+        return kvs[k]
+    else:
+        return 'Key not found', 404 
+        
 # delete a stored value by key
 @app.route('/api/values/<string:key>', methods=['DELETE'])
 def delete(k):
