@@ -1,4 +1,3 @@
-from operator import contains
 from flask import Flask, request
 
 app = Flask(__name__)
@@ -47,7 +46,7 @@ def get(k):
 # delete a stored value by key
 @app.route('/api/values/<string:key>', methods=['DELETE'])
 def delete(k):
-    if contains(kvs.keys, k):
+    if k in kvs:
         del kvs[k]
     else:
         return 'Key not found', 404
